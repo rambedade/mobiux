@@ -2,18 +2,15 @@ function mostPopularItemByMonth(rows) {
     const monthWiseItems = {};
 
     rows.forEach(row => {
-        // Ensure the Date and SKU fields are present and valid
         if (!row['Date'] || !row['SKU'] || isNaN(parseInt(row['Quantity'], 10))) return;
 
         const month = row['Date'].split('-')[1];
         const item = row['SKU'];
         const quantity = parseInt(row['Quantity'], 10);
 
-        // Initialize monthly data structure
         if (!monthWiseItems[month]) monthWiseItems[month] = {};
         if (!monthWiseItems[month][item]) monthWiseItems[month][item] = 0;
 
-        // Aggregate quantity
         monthWiseItems[month][item] += quantity;
     });
 
@@ -32,7 +29,6 @@ function mostPopularItemByMonth(rows) {
         result[month] = { item: maxItem, quantity: maxQuantity };
     }
 
-    // Debugging log
     console.log('Most Popular Items by Month:', result);
     return result;
 }
@@ -43,21 +39,18 @@ function mostPopularItemByMonth(rows) {
 function popularItemStats(rows, popularItems) {
     const result = {};
 
-    // Debugging logs
     console.log('Input Popular Items:', popularItems);
-    console.log('Rows (Sample):', rows.slice(0, 5)); // Check sample rows
+    console.log('Rows (Sample):', rows.slice(0, 5)); 
 
     rows.forEach(row => {
         if (!row['Date'] || !row['SKU'] || isNaN(parseInt(row['Quantity'], 10))) return;
 
         const month = row['Date'].split('-')[1];
 
-        // Ensure the month exists in popularItems
         if (!popularItems[month]) return;
 
         const item = popularItems[month].item;
 
-        // Match SKU and populate quantities
         if (row['SKU'] === item) {
             const quantity = parseInt(row['Quantity'], 10);
             if (!result[month]) result[month] = [];
@@ -75,7 +68,6 @@ function popularItemStats(rows, popularItems) {
         stats[month] = { min, max, avg };
     }
 
-    // Debugging log for final stats
     console.log('Popular Item Statistics:', stats);
     return stats;
 }
