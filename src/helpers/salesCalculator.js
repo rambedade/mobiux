@@ -1,10 +1,10 @@
 function calculateTotalSales(rows) {
     return rows.reduce((total, row) => {
-        const totalPrice = parseFloat(row['Total Price']); // Use 'Total Price' for summing
+        const totalPrice = parseFloat(row['Total Price']); 
         if (!isNaN(totalPrice)) {
             return total + totalPrice;
         }
-        return total; // Skip invalid entries
+        return total; 
     }, 0);
 }
 
@@ -13,9 +13,9 @@ function calculateMonthlySales(rows) {
 
     rows.forEach(row => {
         const date = row['Date'];
-        if (!date) return; // Skip rows without a valid Date
+        if (!date) return; 
 
-        const month = date.split('-')[1]; // Extract month (e.g., '01' for January)
+        const month = date.split('-')[1]; 
         const totalPrice = parseFloat(row['Total Price']);
         
         if (!isNaN(totalPrice)) {
@@ -24,7 +24,6 @@ function calculateMonthlySales(rows) {
         }
     });
 
-    // Debugging log
     console.log('Monthly Sales:', monthlySales);
 
     return monthlySales;

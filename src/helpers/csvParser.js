@@ -1,22 +1,29 @@
 const fs = require('fs');
 
 function parseCSV(filePath) {
+    // Read the file and remove extra spaces or newlines
     const data = fs.readFileSync(filePath, 'utf-8').trim();
-    const [header, ...lines] = data.split('\n');
-    const headers = header.split(',').map(h => h.trim().replace('\r', '')); // Clean header names
 
-    const parsedData = lines.map(line => {
-        const values = line.split(',').map(v => v.trim());
-        const row = {};
+    // Split the data into rows (lines)
+    const rows = data.split('\n');
+
+    // The first row contains the headers (column names)
+    const headers = rows[0].split(',').map(header => header.trim());
+
+    // Process each row after the header
+    const parsedData = rows.slice(1).map(row => {
+        const values = row.split(',').map(value => value.trim()); // Split the row into values
+        const rowObject = {};
+
+        // Map each value to its corresponding header
         headers.forEach((header, index) => {
-            row[header] = values[index]; // Map each value to the cleaned header
+            rowObject[header] = values[index];
         });
-        return row;
+
+        return rowObject;
     });
 
     return parsedData;
 }
 
 module.exports = parseCSV;
-
-
